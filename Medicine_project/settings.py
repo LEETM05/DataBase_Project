@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'camera_page',
+    'login_page',
+    'main_page',
 ]
 
 MIDDLEWARE = [
@@ -82,10 +83,15 @@ WSGI_APPLICATION = "Medicine_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# Connecting DataBase
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'medicinedb',
+        'USER': 'taemin',
+        'PASSWORD': 'dkdrlahEl0520!',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 

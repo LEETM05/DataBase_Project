@@ -17,8 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('camera_page/', include('camera_page.urls')),
+    path('admin/', admin.site.urls),
+    path('login_page/', include('login_page.urls')),  # login_page URL 연결
+    path('main_page/', include('main_page.urls')),    # main_page URL 연결
+    path('', lambda request: redirect('login_page/login/')),  # 기본 루트 경로를 login으로 리다이렉트
 ]
