@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'login_page',
     'main_page',
+    'camera_page',
+    'result_page',
+    'userinfo_page',
 ]
 
 MIDDLEWARE = [

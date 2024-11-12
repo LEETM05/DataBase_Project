@@ -1,0 +1,56 @@
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="ko">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>알약 촬영</title>#}
+{#    <link rel="stylesheet" href={% static 'camera_page.css' %}>#}
+{#</head>#}
+{#<body>#}
+{#    <div class="container">#}
+{#        <div class="card">#}
+{#            <div class="card-content">#}
+{#                <p id="error" class="error-message"></p>#}
+{#                <video id="video" autoplay class="video"></video>#}
+{#                <canvas id="canvas" class="hidden"></canvas>#}
+{#                <img id="capturedImage" alt="Captured pill" class="captured-image hidden" />#}
+{#                <div class="button-group">#}
+{#                    <button onclick="startCamera()" class="button">카메라 켜기</button>#}
+{#                    <button onclick="captureImage()" class="button">촬영</button>#}
+{#                    <button onclick="analyzeImage()" class="button" id="analyzeButton" disabled>확인하기</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <script src={% static 'camera_page.js' %}></script>#}
+{#</body>#}
+{#</html>#}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알약 촬영</title>
+    <link rel="stylesheet" href="{% static 'camera_page.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <p id="error" class="error-message"></p>
+                <video id="video" autoplay class="video"></video>
+                <canvas id="canvas" class="hidden"></canvas>
+                <img id="capturedImage" alt="Captured pill" class="captured-image hidden" />
+                <div class="button-group">
+                    <button onclick="startCamera()" class="button">카메라 켜기</button>
+                    <button onclick="captureImage()" class="button">촬영</button>
+                    <button onclick="analyzeImage()" class="button" id="analyzeButton" disabled>확인하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'camera_page.js' %}"></script>
+</body>
+</html>

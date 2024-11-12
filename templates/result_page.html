@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알약 정보 결과 페이지</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'result_page.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">이 알약은 ...</h1>
+            </div>
+            <div class="card-content">
+                <div class="content-wrapper">
+                    <img id="resultImage">
+                    <div class="scroll-area">
+                        <h2 id="pill-name" class="pill-name">아스피린정</h2>
+                        <p class="pill-info"><strong>설명:</strong> <span id="pill-description">해열, 진통, 소염 작용이 있는 약물</span></p>
+                        <p class="pill-info"><strong>용법:</strong> <span id="pill-usage">1일 1~3회, 1회 1~2정을 복용합니다.</span></p>
+                        <p class="pill-info"><strong>부작용:</strong> <span id="pill-sideEffects">위장 장애, 출혈 위험 증가, 알레르기 반응 등이 나타날 수 있습니다.</span></p>
+                        <p class="pill-info"><strong>주의사항:</strong> <span id="pill-precautions">다른 약물과 상호작용할 수 있으므로 복용 전 의사와 상담하세요. 임신 중이거나 수유 중인 경우, 위장 질환이 있는 경우 주의가 필요합니다.</span></p>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button onclick="goBack()" class="button">다시 촬영</button>
+                    <button onclick="saveResult()" id="saveButton" class="button">사용 이력 저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'result_page.js' %}"></script>
+</body>
+</html>

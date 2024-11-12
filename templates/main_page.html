@@ -15,8 +15,10 @@
       <h1 class="card-title">메인 메뉴</h1>
     </div>
     <div class="card-content">
-      <button onclick="navigateTo('./촬영 페이지/capture')" class="menu-button">알약 검색</button>
-      <button onclick="navigateTo('./내정보 페이지/my-info')" class="menu-button">내 정보</button>
+{#      <button onclick="navigateTo('./촬영 페이지/capture')" class="menu-button">알약 검색</button>#}
+        <button onclick="window.location.href='{% url 'camera_page' %}'" class="menu-button">알약 검색</button>
+{#      <button onclick="navigateTo('./내정보 페이지/my-info')" class="menu-button">내 정보</button>#}
+        <button onclick="window.location.href='{% url 'userinfo_page' %}'" class="menu-button">내 정보</button>
     </div>
   </div>
 </div>
