@@ -35,7 +35,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/login_page/'
 
+LOGOUT_REDIRECT_URL = '/login_page/'  # 로그아웃 후 리다이렉트될 URL
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     'camera_page',
     'result_page',
     'userinfo_page',
+    'userinfo_edit',
 ]
 
 MIDDLEWARE = [
@@ -98,6 +101,7 @@ DATABASES = {
     }
 }
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

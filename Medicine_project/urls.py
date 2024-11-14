@@ -17,15 +17,29 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('login_page/', include('login_page.urls')),  # login_page URL 연결
+#     path('camera_page/', include('camera_page.urls')),
+#     path('main_page/', include('main_page.urls')),    # main_page URL 연결
+#     path('result_page/', include('result_page.urls')),
+#     # path('main_page/result/', include('result_page.urls')),  # 결과 페이지를 main_page/result 경로로 연결
+#     path('', lambda request: redirect('/login_page/')),  # 기본 루트 경로를 login으로 리다이렉트
+#     path('userinfo_page/', include('userinfo_page.urls')),
+#     path('infoedit_page/', include('infoedit_page.urls')),
+# ]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login_page/', include('login_page.urls')),  # login_page URL 연결
     path('camera_page/', include('camera_page.urls')),
-    path('main_page/', include('main_page.urls')),    # main_page URL 연결
+    path('main_page/', include('main_page.urls')),  # main_page URL 연결
     path('result_page/', include('result_page.urls')),
-    # path('main_page/result/', include('result_page.urls')),  # 결과 페이지를 main_page/result 경로로 연결
-    path('', lambda request: redirect('login_page/login/')),  # 기본 루트 경로를 login으로 리다이렉트
     path('userinfo_page/', include('userinfo_page.urls')),
+    # 기본 루트 경로를 login_page로 리다이렉트
+    path('', lambda request: redirect('login')),  # 'login'은 login_page.urls에서 설정한 URL name입니다.
+    path('userinfo_edit/', include('userinfo_edit.urls')),
 ]

@@ -27,6 +27,9 @@
                 <label for="login-password">비밀번호</label>
                 <input type="password" id="login-password" name="password" required>
             </div>
+            {% if error_message %}
+                <small class="error-message">{{ error_message }}</small>
+            {% endif %}
             <button type="submit" id="login-submit" class="submit-button">로그인</button>
         </form>
     </div>
@@ -54,11 +57,19 @@
             <div class="input-group">
                 <label for="register-name">이름</label>
                 <input type="text" id="register-name" name="name" required disabled>
+                {% if error_message %}
+                    <small class="error-message" style="color: red;">{{ error_message }}</small>
+                {% endif %}
             </div>
             <button type="submit" id="register-submit" class="submit-button" disabled>회원가입</button>
         </form>
     </div>
+    <hr>
 </div>
+<div class="title">
+    <h6>알정</h6>
+</div>
+
 <script src={% static 'login.js' %}></script>
 </body>
 </html>

@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비밀번호 변경</title>
+  <link rel="stylesheet" href="{% static 'infoedit_page.css' %}">
+</head>
+<body>
+
+<div class="info-container">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">비밀번호 변경</h1>
+    </div>
+    <div class="card-content">
+        <!-- 로그인된 사용자 아이디 표시 -->
+        <p>아이디: {{ user.username }}</p>
+        <form id="password-form" action="{% url 'infoedit' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="current_password">현재 비밀번호</label>
+                <input type="password" id="current_password" name="current_password" required>
+            </div>
+            <div class="input-group">
+                <label for="new_password">새 비밀번호</label>
+                <input type="password" id="new_password" name="new_password" required>
+            </div>
+            <div class="input-group">
+                <label for="confirm_password">비밀번호 확인</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="info-button">비밀번호 변경</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+{#{% include 'footer.html' %}#}
+
+<script src="{% static 'infoedit_page.js' %}"></script>
+</body>
+</html>

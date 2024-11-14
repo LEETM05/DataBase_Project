@@ -1,0 +1,95 @@
+{#{% load static %}#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="ko">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>회원정보 수정</title>#}
+{#    <link rel="stylesheet" href="{% static 'userinfo_edit.css' %}">#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<div class="edit-container">#}
+{#    <div class="edit-card">#}
+{#        <div class="edit-header">#}
+{#            <h1 class="edit-title">회원정보 수정</h1>#}
+{#        </div>#}
+{#        <div class="edit-content">#}
+{#            <label for="username">아이디:</label>#}
+{#            <input type="text" id="username" name="username" value="{{ user.username }}" readonly>#}
+{##}
+{#            <button onclick="togglePasswordChange()" class="edit-button">비밀번호 변경</button>#}
+{##}
+{#            <form id="password-change-form" method="post" action="" style="display: none;">#}
+{#                {% csrf_token %}#}
+{#                <label for="current_password">현재 비밀번호:</label>#}
+{#                <input type="password" id="current_password" name="current_password" required oninput="validateCurrentPassword()">#}
+{#                <small id="current-password-error" class="error-message"></small>#}
+{##}
+{#                <label for="new_password">새 비밀번호:</label>#}
+{#                <input type="password" id="new_password" name="new_password" required>#}
+{##}
+{#                <label for="confirm_password">새 비밀번호 확인:</label>#}
+{#                <input type="password" id="confirm_password" name="confirm_password" required oninput="validatePasswordMatch()">#}
+{#                <small id="password-match-error" class="error-message"></small>#}
+{##}
+{#                <button type="submit" class="edit-button save-button">저장</button>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<script src="{% static 'userinfo_edit.js' %}"></script>#}
+{#</body>#}
+{#</html>#}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원정보 수정</title>
+    <link rel="stylesheet" href="{% static 'userinfo_edit.css' %}">
+</head>
+<body>
+
+<div class="edit-container">
+    <div class="edit-card">
+        <div class="edit-header">
+            <h1 class="edit-title">회원정보 수정</h1>
+        </div>
+        <div class="edit-content">
+            <label for="username" style="display: inline-block">아이디 : </label>
+            <span id="username" style="display: inline-block">{{ user.username }}</span>
+
+            <button onclick="togglePasswordChange()" class="edit-button">비밀번호 변경</button>
+
+            <form id="password-change-form" method="post" action="" style="display: none;">
+                {% csrf_token %}
+                <label for="current_password">현재 비밀번호:</label>
+                <input type="password" id="current_password" name="current_password" required>
+                <button type="button" class="edit-button" onclick="verifyCurrentPassword()">확인</button>
+                <small id="current-password-error" class="error-message"></small>
+
+                <div id="new-password-fields" style="display: none;">
+                    <label for="new_password">새 비밀번호:</label>
+                    <input type="password" id="new_password" name="new_password" required oninput="validatePasswordMatch()">
+
+                    <label for="confirm_password">새 비밀번호 확인:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required oninput="validatePasswordMatch()">
+                    <small id="password-match-error" class="error-message"></small>
+
+                    <button type="submit" class="edit-button save-button">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{#{% include 'footer.html' %}#}
+
+<script src="{% static 'userinfo_edit.js' %}"></script>
+</body>
+</html>
