@@ -40,6 +40,8 @@ LOGIN_URL = '/login_page/'
 LOGOUT_REDIRECT_URL = '/login_page/'  # 로그아웃 후 리다이렉트될 URL
 # Application definition
 
+AUTH_USER_MODEL = 'login_page.User'
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -121,6 +123,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache'),
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

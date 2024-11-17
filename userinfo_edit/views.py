@@ -1,246 +1,58 @@
-# from django.shortcuts import render, redirect
-# from django.contrib.auth.decorators import login_required
-# from django.contrib import messages
-# from django.contrib.auth.models import User
-# from django.contrib.auth import update_session_auth_hash
-# from django.contrib.auth.hashers import check_password
-# import MySQLdb
-# import os
-#
-# from django.http import JsonResponse
-#
-#
-# @login_required
-# def userinfo_edit(request):
-#     if request.method == "POST":
-#         current_password = request.POST.get("current_password")
-#         new_password = request.POST.get("new_password")
-#         confirm_password = request.POST.get("confirm_password")
-#
-#         username = request.user.username
-#
-#         # Connect to the MySQL database
-#         db = MySQLdb.connect(
-#             host="localhost",
-#             user="taemin",
-#             passwd="dkdrlahEl0520!",
-#             db="medicinedb",
-#             port=3306
-#         )
-#         cursor = db.cursor()
-#
-#         # Get the current password for the user from the database
-#         cursor.execute("SELECT password FROM login_page_user WHERE username = %s", [username])
-#         db_password = cursor.fetchone()[0]
-#
-#         # Check if current password is correct
-#         if not check_password(current_password, db_password):
-#             messages.error(request, "현재 비밀번호가 다릅니다.")
-#             return render(request, "userinfo_edit.html")
-#
-#         # Check if new passwords match
-#         if new_password != confirm_password:
-#             messages.error(request, "새 비밀번호가 일치하지 않습니다.")
-#             return render(request, "userinfo_edit.html")
-#
-#         # Update password
-#         cursor.execute("UPDATE login_page_user SET password = %s WHERE username = %s", [new_password, username])
-#         db.commit()
-#         db.close()
-#
-#         messages.success(request, "비밀번호가 성공적으로 변경되었습니다.")
-#         return redirect("userinfo_edit")
-#
-#     return render(request, "userinfo_edit.html")
-#
-# @login_required
-# def verify_password(request):
-#     if request.method == "POST":
-#         current_password = request.POST.get("current_password")
-#         username = request.user.username
-#
-#         # MySQL 데이터베이스에 연결
-#         db = MySQLdb.connect(
-#             host="127.0.0.1",
-#             user="taemin",
-#             passwd="dkdrlahEl0520!",
-#             db="medicinedb",
-#             port=3306
-#         )
-#         cursor = db.cursor()
-#
-#         # 현재 비밀번호 가져오기
-#         cursor.execute("SELECT password FROM login_page_user WHERE username = %s", [username])
-#         db_password = cursor.fetchone()[0]
-#         db.close()
-#
-#         # 현재 비밀번호 확인
-#         if current_password == db_password:
-#             return JsonResponse({"valid": True})
-#         else:
-#             return JsonResponse({"valid": False})
-#     return JsonResponse({"error": "Invalid request"}, status=400)
-
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
-import MySQLdb
-
-# @login_required
-# def userinfo_edit(request):
-#     if request.method == "POST":
-#         # AJAX 비밀번호 확인 요청일 경우
-#         # if request.is_ajax() and request.POST.get("action") == "verify_password":
-#         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.POST.get("action") == "verify_password":
-#             current_password = request.POST.get("current_password")
-#             username = request.user.username
-#
-#             # MySQL 데이터베이스에 연결
-#             db = MySQLdb.connect(
-#                 host="127.0.0.1",
-#                 user="taemin",
-#                 passwd="dkdrlahEl0520!",
-#                 db="medicinedb",
-#                 port=3306
-#             )
-#             cursor = db.cursor()
-#
-#             # 현재 비밀번호 가져오기
-#             cursor.execute("SELECT password FROM login_page_user WHERE username = %s", [username])
-#             db_password = cursor.fetchone()[0]
-#             db.close()
-#
-#             # 비밀번호 확인 결과 반환
-#             if current_password == db_password:
-#                 return JsonResponse({"valid": True})
-#             else:
-#                 return JsonResponse({"valid": False})
-#
-#         # 비밀번호 변경 요청일 경우
-#         else:
-#             current_password = request.POST.get("current_password")
-#             new_password = request.POST.get("new_password")
-#             confirm_password = request.POST.get("confirm_password")
-#             username = request.user.username
-#
-#             # MySQL 데이터베이스에 연결
-#             db = MySQLdb.connect(
-#                 host="localhost",
-#                 user="taemin",
-#                 passwd="dkdrlahEl0520!",
-#                 db="medicinedb",
-#                 port=3306
-#             )
-#             cursor = db.cursor()
-#
-#             # 현재 비밀번호 확인
-#             cursor.execute("SELECT password FROM login_page_user WHERE username = %s", [username])
-#             db_password = cursor.fetchone()[0]
-#
-#             if current_password != db_password:
-#                 messages.error(request, "현재 비밀번호가 다릅니다.")
-#                 db.close()
-#                 return render(request, "userinfo_edit.html")
-#
-#             # 새 비밀번호와 확인 비밀번호가 일치하는지 확인
-#             if new_password != confirm_password:
-#                 messages.error(request, "새 비밀번호가 일치하지 않습니다.")
-#                 db.close()
-#                 return render(request, "userinfo_edit.html")
-#
-#             # 비밀번호 업데이트
-#             cursor.execute("UPDATE login_page_user SET password = %s WHERE username = %s", [new_password, username])
-#             db.commit()
-#             db.close()
-#
-#             messages.success(request, "비밀번호가 성공적으로 변경되었습니다.")
-#             return redirect("userinfo_edit")
-#
-#     return render(request, "userinfo_edit.html")
-
-from django.contrib.auth.hashers import check_password
+from django.db import connection  # MySQL 연결을 위한 Django 모듈
+from django.contrib import messages
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import User
+import json
 
 @login_required
 def userinfo_edit(request):
     if request.method == "POST":
-        # AJAX 비밀번호 확인 요청일 경우
-        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.POST.get("action") == "verify_password":
-            current_password = request.POST.get("current_password")
-            username = request.user.username
+        current_password = request.POST.get("current_password")
+        new_password = request.POST.get("new_password")
+        confirm_password = request.POST.get("confirm_password")
 
-            # MySQL 데이터베이스에 연결
-            db = MySQLdb.connect(
-                host="127.0.0.1",
-                user="taemin",
-                passwd="dkdrlahEl0520!",
-                db="medicinedb",
-                port=3306
-            )
-            cursor = db.cursor()
+        # 현재 사용자 가져오기
+        user = request.user  # 로그인한 사용자 객체
 
-            # 현재 비밀번호 가져오기
-            cursor.execute("SELECT password FROM login_page WHERE username = %s", [username])
-            db_password = cursor.fetchone()[0]
-            db.close()
+        # 현재 비밀번호 검증
+        if not user.check_password(current_password):  # ORM에서 제공하는 check_password 사용
+            messages.error(request, '현재 비밀번호가 올바르지 않습니다.')
+            return redirect('userinfo_edit')
 
-            # 비밀번호 확인 결과 반환 (check_password 사용)
-            if check_password(current_password, db_password):
-                return JsonResponse({"valid": True})
-            else:
-                return JsonResponse({"valid": False})
+        # 새 비밀번호와 확인 비밀번호 일치 여부 검증
+        if new_password != confirm_password:
+            messages.error(request, '새 비밀번호가 일치하지 않습니다.')
+            return redirect('userinfo_edit')
 
-        # 비밀번호 변경 요청일 경우
-        else:
-            current_password = request.POST.get("current_password")
-            new_password = request.POST.get("new_password")
-            confirm_password = request.POST.get("confirm_password")
-            username = request.user.username
+        # 새 비밀번호 유효성 검사
+        if len(new_password) < 8 or not any(char.isdigit() for char in new_password) or not any(char.isalpha() for char in new_password):
+            messages.error(request, '비밀번호는 최소 8자 이상이어야 하며, 문자와 숫자를 포함해야 합니다.')
+            return redirect('userinfo_edit')
 
-            # 비밀번호 값이 None이거나 빈 문자열인지 확인
-            if not current_password or not new_password or not confirm_password:
-                messages.error(request, "모든 비밀번호 필드를 입력해야 합니다.")
-                return render(request, "userinfo_edit.html")
+        # 비밀번호 업데이트
+        user.set_password(new_password)  # set_password로 비밀번호 해싱 및 저장
+        user.save()
 
-            # MySQL 데이터베이스에 연결
-            db = MySQLdb.connect(
-                host="localhost",
-                user="taemin",
-                passwd="dkdrlahEl0520!",
-                db="medicinedb",
-                port=3306
-            )
-            cursor = db.cursor()
+        messages.success(request, '비밀번호가 성공적으로 변경되었습니다.')
+        return redirect('userinfo_edit')
 
-            # 현재 비밀번호 확인
-            cursor.execute("SELECT password FROM login_page WHERE username = %s", [username])
-            db_password = cursor.fetchone()[0]
+    # userinfo_edit.html 렌더링
+    return render(request, 'userinfo_edit/userinfo_edit.html', {'user': request.user})
 
-            if not check_password(current_password, db_password):
-                messages.error(request, "현재 비밀번호가 다릅니다.")
-                db.close()
-                return render(request, "userinfo_edit.html")
+@login_required
+def verify_password(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        current_password = data.get("current_password")
 
-            # 새 비밀번호와 확인 비밀번호가 일치하는지 확인
-            if new_password != confirm_password:
-                messages.error(request, "새 비밀번호가 일치하지 않습니다.")
-                db.close()
-                return render(request, "userinfo_edit.html")
+        # 현재 사용자 가져오기
+        user = request.user  # 로그인된 사용자 객체
 
-            # 비밀번호 업데이트 - 비밀번호가 비어 있지 않은지 확인
-            if new_password.strip() == "":
-                messages.error(request, "새 비밀번호를 올바르게 입력해야 합니다.")
-                db.close()
-                return render(request, "userinfo_edit.html")
+        # 비밀번호 확인
+        if user.check_password(current_password):  # Django ORM의 check_password 사용
+            return JsonResponse({'success': True})
 
-            # 비밀번호를 해시하여 업데이트
-            from django.contrib.auth.hashers import make_password
-            hashed_password = make_password(new_password)
-            cursor.execute("UPDATE login_page SET password = %s WHERE username = %s", [hashed_password, username])
-            db.commit()
-            db.close()
-
-            messages.success(request, "비밀번호가 성공적으로 변경되었습니다.")
-            return redirect("userinfo_edit")
-
-    return render(request, "userinfo_edit.html")
+        return JsonResponse({'success': False})
