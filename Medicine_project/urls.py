@@ -42,4 +42,5 @@ urlpatterns = [
     # 기본 루트 경로를 login_page로 리다이렉트
     path('', lambda request: redirect('login')),  # 'login'은 login_page.urls에서 설정한 URL name입니다.
     path('userinfo_edit/', include('userinfo_edit.urls')),
+    path('history_page/', include('history_page.urls')),
 ]

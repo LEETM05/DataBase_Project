@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'result_page',
     'userinfo_page',
     'userinfo_edit',
+    'history_page',
 ]
 
 MIDDLEWARE = [

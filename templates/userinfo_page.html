@@ -18,7 +18,8 @@
         <div class="card-content">
             {#        <button onclick="navigateTo('/userinfo_edit')" class="info-button">회원정보 수정</button>#}
             <button onclick="window.location.href='{% url 'userinfo_edit' %}'" class="info-button">회원정보 수정</button>
-            <button onclick="navigateTo('/history')" class="info-button">과거 이력</button>
+            <button onclick="window.location.href='{% url 'history_page' %}'" class="info-button">과거 이력</button>
+{#            <button onclick="navigateTo('/history')" class="info-button">과거 이력</button>#}
         </div>
         {% include 'footer.html' %}
     </div>

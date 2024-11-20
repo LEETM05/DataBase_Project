@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용 이력</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'history_page.css' %}">
+</head>
+<body>
+    <div class="history-container">
+        <h1 class="history-title">사용 이력</h1>
+        <div class="history-list">
+            {% for item in history %}
+                <div class="history-item">
+                    <img src="{{ item.pill_image.url }}" alt="약 사진" class="history-image">
+                    <div class="history-info">
+                        <h2 class="pill-name">{{ item.pill_name }}</h2>
+                        <p class="pill-date">{{ item.saved_date }}</p>
+                    </div>
+                    <button class="info-button" onclick="window.location.href='{% url 'history_page:result_page' item.pill_code %}'">
+                        정보 보기
+                    </button>
+                </div>
+            {% empty %}
+                <p>저장된 이력이 없습니다.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
