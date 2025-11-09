@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+    font-family: 'Gowun Batang', serif;
+}
+
+.edit-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: "Gowun Batang", serif;
+}
+
+.edit-card {
+    width: 350px;
+    background-color: #fef2f2;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-family: "Gowun Batang", serif;
+}
+
+.edit-header {
+    text-align: center;
+    border-bottom: 1px solid #f87171;
+    margin-bottom: 20px;
+    font-family: "Gowun Batang", serif;
+}
+
+.edit-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    font-family: "Gowun Batang", serif;
+}
+
+.edit-content label {
+    display: block;
+    margin-top: 10px;
+    font-family: "Gowun Batang", serif;
+}
+
+.edit-content input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    font-family: "Gowun Batang", serif;
+}
+
+.edit-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 1rem;
+    color: white;
+    background-color: #dc2626;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: "Gowun Batang", serif;
+}
+
+.edit-button:hover {
+    background-color: #b91c1c;
+    font-family: "Gowun Batang", serif;
+}
+
+.error-message {
+    color: #b91c1c;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-family: "Gowun Batang", serif;
+}

@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알약 촬영</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'camera_page.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <p id="error" class="error-message"></p>
+            <video id="video" autoplay class="video"></video>
+            <canvas id="canvas" class="hidden"></canvas>
+            <img id="capturedImage" alt="Captured pill" class="captured-image hidden"/>
+            <div class="button-group">
+                <button onclick="startCamera()" class="button">카메라 켜기</button>
+                <button onclick="captureImage()" class="button">촬영</button>
+                <button onclick="analyzeImage()" class="button" id="analyzeButton" disabled>확인하기</button>
+            </div>
+            <div class="button-group">
+                <button onclick="window.location.href={% url 'history_page' %}" class="button" style="margin-top: 10px">과거 이력 보기</button>
+                <button onclick="window.location.href={% url 'main_page' %}" class="button" style="margin-top: 10px">돌아 가기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function startCamera() {
+        const video = document.getElementById('video');
+        navigator.mediaDevices
+            .getUserMedia({video: true})
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((error) => {
+                document.getElementById('error').textContent = "카메라를 사용할 수 없습니다.";
+                console.error(error);
+            });
+    }
+
+    function captureImage() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const capturedImage = document.getElementById('capturedImage');
+        const analyzeButton = document.getElementById('analyzeButton');
+
+        // 캔버스에 비디오 프레임 그리기
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // 캔버스 이미지를 캡처 이미지로 표시
+        const imageDataURL = canvas.toDataURL('image/png');
+        capturedImage.src = imageDataURL;
+        capturedImage.classList.remove('hidden');
+        analyzeButton.disabled = false;
+    }
+
+    async function analyzeImage() {
+        const canvas = document.getElementById('canvas');
+        const imageBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png')); // 캔버스 데이터를 Blob으로 변환
+
+        const formData = new FormData();
+        formData.append('image', imageBlob, 'captured_image.png'); // FormData에 Blob 추가
+        const csrfToken = getCsrfToken();
+        try {
+            const response = await fetch("/result_page/process/", { // 서버 URL로 요청
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                },
+                body: formData, // FormData를 요청 본문으로 전송
+            });
+            console.log("okay")
+            if (!response.ok) {
+                throw new Error("이미지 처리 실패");
+            }
+
+            const result = await response.json();
+            console.log(result);
+
+            // 결과 페이지로 이동
+            {#window.location.href = "/result_page/?imagePath=" + result.image_url;#}
+            window.location.href = "/result_page/?imagePath=" + encodeURIComponent(result.image_url) +
+                "&medicineInfoPath=" + encodeURIComponent(result.medicine_info_url);
+
+        } catch (error) {
+            console.error("Error during image analysis:", error);
+            alert("이미지 처리 중 문제가 발생했습니다.");
+        }
+
+        function getCsrfToken() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith('csrftoken=')) {
+                    return cookie.substring('csrftoken='.length, cookie.length);
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

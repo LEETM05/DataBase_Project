@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알약 정보 결과 페이지</title>
+    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'result_page.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">이 알약은 ...</h1>
+        </div>
+        <div class="card-content">
+            <div class="content-wrapper">
+                <img id="resultImage" alt="결과 이미지">
+                <div class="scroll-area">
+                    <h2 id="pill-name" class="pill-name" data-pillId="" style="font-weight: bolder">알약 이름</h2>
+                    <!-- 제품코드 저장 -->
+                    <h3 class="pill-info" style="font-weight: bolder"><strong>효능/효과</strong></h3>
+                    <p class="pill-info"><span id="pill-description"></span></p>
+                    <h3 class="pill-info" style="font-weight: bolder"><strong>사용법</strong></h3>
+                    <p class="pill-info"><span id="pill-usage"></span></p>
+                    <h3 class="pill-info" style="font-weight: bolder"><strong>보관방법</strong></h3>
+                    <p class="pill-info"><span id="pill-storage"></span></p>
+                    <h3 class="pill-info" style="font-weight: bolder"><strong>주의사항</strong></h3>
+                    <p class="pill-info"><span id="pill-precautions"></span></p>
+                </div>
+            </div>
+            <div class="button-container">
+                <button onclick="saveResult()" id="saveButton" class="save_button">사용 이력 저장</button>
+            </div>
+            <div class="button-group">
+                <button onclick="goBack()" class="button">다시 촬영</button>
+                <button onclick="window.location.href={% url 'main_page' %}" class="button">메인으로 가기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // test
+    document.addEventListener("DOMContentLoaded", async () => {
+        // URL에서 데이터 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const imagePath = urlParams.get("imagePath");
+        const medicineInfoUrl = urlParams.get("medicineInfoPath");
+
+        if (!imagePath) {
+            alert("이미지가 없습니다!");
+            return;
+        }
+
+        // 이미지 표시
+        document.getElementById("resultImage").src = imagePath;
+
+        if (!medicineInfoUrl) {
+            alert("탐지된 알약 정보 URL이 없습니다.");
+            return;
+        }
+
+        try {
+            // 서버에서 JSON 데이터를 가져오기
+            const response = await fetch(medicineInfoUrl);
+
+            if (!response.ok) {
+                throw new Error("알약 정보 데이터를 가져올 수 없습니다.");
+            }
+
+            const medicineInfo = await response.json();
+
+            // medicine_info 데이터 표시
+            document.getElementById("pill-name").textContent = medicineInfo.제품명 || "알약 이름 없음";
+            document.getElementById("pill-name").setAttribute("data-pillId", medicineInfo.제품코드);
+            document.getElementById("pill-description").textContent = medicineInfo.효능효과 || "효능 정보 없음";
+            document.getElementById("pill-usage").textContent = medicineInfo.용법용량 || "용법 정보 없음";
+            document.getElementById("pill-storage").textContent = medicineInfo.저장방법 || "저장 방법 없음";
+            document.getElementById("pill-precautions").textContent = medicineInfo.사용상의주의사항 || "주의사항 없음";
+        } catch (error) {
+            console.error("Error loading medicine info:", error);
+            alert("알약 정보를 불러오는 중 문제가 발생했습니다.");
+        }
+    });
+
+    // test
+    async function saveResult() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const medicineInfoUrl = urlParams.get("medicineInfoPath");
+
+        if (!medicineInfoUrl) {
+            alert("탐지된 알약 정보 URL이 없습니다.");
+            return;
+        }
+
+        try {
+            const response = await fetch(medicineInfoUrl);
+            if (!response.ok) {
+                throw new Error("알약 정보 데이터를 가져올 수 없습니다!!");
+            }
+            const medicineInfo = await response.json();
+            const pillName = medicineInfo.제품명;
+            const pillCode = medicineInfo.제품코드;
+            const imageUrl = document.getElementById("resultImage").src;
+            const userId = "{{ user.id }}";
+
+            console.log("제품명 : ", pillName);
+            console.log("제품코드 : ", pillCode);
+            console.log("이미지 URL : ", imageUrl);
+
+            if (!userId || !pillName || !pillCode || !imageUrl) {
+                alert("저장할 데이터가 부족합니다.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("id", userId);
+            formData.append("제품명", pillName);
+            formData.append("제품코드", pillCode);
+            formData.append("image_url", imageUrl);
+
+            const saveResponse = await fetch("{% url 'save_history' %}", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!saveResponse.ok) {
+                throw new Error("이력 저장 실패");
+            }
+            const result = await saveResponse.json();
+            alert(result.message || "사용 이력이 저장되었습니다.");
+        } catch (error) {
+            console.error("Error during save history : ", error);
+            alert("사용 이력 저장 중 문제가 발생했습니다.");
+        }
+    }
+
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>

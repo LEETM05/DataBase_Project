@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 메뉴</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'main_page.css' %}">
+</head>
+<body>
+
+<div class="main-menu-container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">메인 메뉴</h1>
+        </div>
+        <div class="card-content">
+            <button onclick="window.location.href='{% url 'camera_page' %}'" class="menu-button">알약 검색</button>
+            <button onclick="window.location.href='{% url 'userinfo_page' %}'" class="menu-button">내 정보</button>
+        </div>
+    </div>
+</div>
+
+{#{% include 'footer.html' %}#}
+
+<script src={% static main_page.js %}></script>
+</body>
+</html>

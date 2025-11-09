@@ -1,0 +1,77 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #ffffff;
+    font-family: "Gowun Batang", serif;
+    margin: 0;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Gowun Batang", serif;
+}
+
+.card {
+    background-color: #ffe6e6;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Gowun Batang", serif;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+    font-family: "Gowun Batang", serif;
+}
+
+.error-message {
+    color: #e63946;
+    margin-bottom: 10px;
+    font-family: "Gowun Batang", serif;
+}
+
+.video, .captured-image {
+    width: 100%;
+    margin-bottom: 10px;
+    font-family: "Gowun Batang", serif;
+}
+
+.hidden {
+    display: none;
+    font-family: "Gowun Batang", serif;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-family: "Gowun Batang", serif;
+}
+
+.button {
+    background-color: #e63946;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
+    font-family: "Gowun Batang", serif;
+}
+
+.button:disabled {
+    background-color: #f0a3a3;
+    cursor: not-allowed;
+    font-family: "Gowun Batang", serif;
+}

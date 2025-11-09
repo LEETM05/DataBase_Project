@@ -1,0 +1,39 @@
+.footer {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffe6e6;
+    border-top: 1px solid #ffc1c1;
+    padding: 10px 0;
+    box-sizing: border-box;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.footer h6 {
+    margin: 0;
+    font-size: 1em;
+    color: #333;
+    font-weight: bold;
+    font-family: "Gowun Batang", serif;
+}
+
+.logout-button {
+    background-color: transparent;
+    color: #dc2626;
+    padding: 5px 15px;
+    border: 1px solid #dc2626;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.logout-button:hover {
+    background-color: #ffe6e6;
+}

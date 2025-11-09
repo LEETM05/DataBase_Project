@@ -1,0 +1,66 @@
+{#{% load static %}#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="ko">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>내 정보</title>#}
+{#    <link rel="stylesheet" href="{% static 'userinfo_page.css' %}">#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<div class="info-container">#}
+{#    <div class="card">#}
+{#        <div class="card-header">#}
+{#            <h1 class="card-title">내 정보</h1>#}
+{#        </div>#}
+{#        <div class="card-content">#}
+{#        <button onclick="navigateTo('/userinfo_edit')" class="info-button">회원정보 수정</button>#}
+{#            <button onclick="window.location.href='{% url 'userinfo_edit' %}'" class="info-button">회원정보 수정</button>#}
+{#            <button onclick="window.location.href='{% url 'history_page' %}'" class="info-button">과거 이력</button>#}
+{#            <button onclick="navigateTo('/history')" class="info-button">과거 이력</button>#}
+{#        </div>#}
+{#        {% include 'footer.html' %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{##}
+{#<script src="{% static 'userinfo_page.js' %}"></script>#}
+{#</body>#}
+{#</html>#}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보</title>
+    <link rel="stylesheet" href="{% static 'userinfo_page.css' %}">
+    {#  GOOGLE FONTS  #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="info-container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">내 정보</h1>
+        </div>
+        <div class="card-content" style="display: flex; flex-direction: column; gap: 10px;">
+            <button onclick="window.location.href='{% url 'userinfo_edit' %}'" class="info-button">회원정보 수정</button>
+            <button onclick="window.location.href='{% url 'history_page' %}'" class="info-button">과거 이력</button>
+            <!-- 뒤로 가기 버튼 추가 -->
+            <button onclick="window.location.href='{% url 'main_page' %}'" class="info-button">돌아 가기</button>
+        </div>
+
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+<script src="{% static 'userinfo_page.js' %}"></script>
+</body>
+</html>

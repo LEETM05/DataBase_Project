@@ -1,0 +1,117 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+    font-family: 'Gowun Batang', serif;
+}
+
+.history-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Gowun Batang', serif;
+}
+
+.history-title {
+    text-align: center;
+    color: #dc2626;
+    font-size: 2em;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    font-family: 'Gowun Batang', serif;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 500px; /* 제한된 높이 */
+    overflow-y: auto; /* 스크롤 가능 */
+    font-family: 'Gowun Batang', serif;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fee2e2;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Gowun Batang', serif;
+}
+
+.history-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    object-fit: cover;
+    font-family: 'Gowun Batang', serif;
+}
+
+.history-info {
+    flex: 1;
+    margin-left: 15px;
+    text-align: left;
+    font-family: 'Gowun Batang', serif;
+}
+
+.pill-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #dc2626;
+    margin-bottom: 5px;
+    font-family: 'Gowun Batang', serif;
+}
+
+.pill-date {
+    font-size: 0.9em;
+    color: #555;
+    font-family: 'Gowun Batang', serif;
+}
+
+.info-button {
+    padding: 8px 12px;
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Gowun Batang', serif;
+}
+
+.info-button:hover {
+    background-color: #b91c1c;
+    font-family: 'Gowun Batang', serif;
+}
+
+.info-button:active {
+    background-color: #991b1b;
+    font-family: 'Gowun Batang', serif;
+}
+
+/* 스크롤바 커스터마이즈 */
+.history-list::-webkit-scrollbar {
+    width: 8px;
+    font-family: 'Gowun Batang', serif;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background-color: #dc2626;
+    border-radius: 8px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+    background-color: #b91c1c;
+}

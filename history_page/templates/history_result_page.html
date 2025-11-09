@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알약 정보</title>
+    <link rel="stylesheet" href="{% static 'history_result_page.css' %}">
+    {#  GOOGLE FONTS  #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{{ pill_name }}</h1>
+        </div>
+        <div class="card-content">
+            <div class="content-wrapper">
+                <img src="{{ image_url }}" alt="알약 사진" class="result-image">
+                <div class="pill-info">
+{#                    <h2>제품 코드:</h2>#}
+{#                    <p>{{ pill_code }}</p>#}
+
+                    <h3>효능/효과</h3>
+                    <p>{{ efficacy }}</p>
+
+                    <h3>사용법</h3>
+                    <p>{{ usage }}</p>
+
+                    <h3>보관 방법</h3>
+                    <p>{{ storage }}</p>
+
+                    <h3>주의사항</h3>
+                    <p>{{ precautions }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button onclick="window.history.back()" class="button">뒤로 가기</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

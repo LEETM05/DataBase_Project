@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용 이력</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'history_page.css' %}">
+</head>
+<body>
+<div class="history-container">
+    <h1 class="history-title">사용 이력</h1>
+    <div class="history-list">
+        {% for item in history %}
+            <div class="history-item">
+                <!-- 썸네일 이미지를 불러옴 -->
+                <img src="{{ item.thumbnail_url }}" alt="약 사진" class="history-image">
+                <div class="history-info">
+                    <h2 class="pill-name">{{ item.pill_name }}</h2>
+                    <p class="pill-date">{{ item.saved_date }}</p>
+                </div>
+                <button class="info-button"
+                        onclick="window.location.href='{% url 'history_result_page' item.pill_code %}'">
+                    정보 보기
+                </button>
+                <button class="info-button" style="margin: 10px"
+                        onclick="deleteHistory('{{ item.thumbnail_url }}', this)">
+                    제거하기
+                </button>
+
+            </div>
+        {% empty %}
+            <p>저장된 이력이 없습니다.</p>
+        {% endfor %}
+    </div>
+    <div>
+        <button class="info-button" onclick="window.location.href='{% url 'userinfo_page' %}'"
+                style="float: right; margin-top: 10px;">뒤로 가기
+        </button>
+    </div>
+</div>
+
+<script>
+    function navigateToResult(pillCode, imageUrl, medicineInfoUrl) {
+        console.log(imageUrl);
+        console.log(medicineInfoUrl);
+
+        // URL 파라미터로 데이터 전달
+        const queryParams = new URLSearchParams({
+            image_url: imageUrl,
+            medicine_info_url: medicineInfoUrl
+        });
+
+        // 이동
+        window.location.href = `/result_page/?` + queryParams.toString();
+    }
+
+    function deleteHistory(imageUrl, element) {
+        if (!confirm("정말로 이 항목을 삭제하시겠습니까?")) {
+            return;
+        }
+
+        fetch("{% url 'delete_history' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: new URLSearchParams({
+                image_url: imageUrl
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    // 해당 항목만 제거
+                    element.parentNode.remove();
+                } else {
+                    alert(data.error || "삭제 실패");
+                }
+            })
+            .catch(error => {
+                console.error("삭제 중 오류 발생:", error);
+                alert("삭제 중 문제가 발생했습니다.");
+            });
+    }
+</script>
+</body>
+</html>

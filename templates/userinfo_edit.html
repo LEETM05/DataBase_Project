@@ -1,0 +1,127 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원정보 수정</title>
+    <link rel="stylesheet" href="{% static 'userinfo_edit.css' %}">
+    {#  GOOGLE FONTS  #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="edit-container">
+    <div class="edit-card">
+        <div class="edit-header">
+            <h1 class="edit-title">회원정보 수정</h1>
+        </div>
+        <div class="edit-content">
+            <label for="username" style="display: inline-block">아이디 : </label>
+            <span id="username" style="display: inline-block">{{ user.id }}</span>
+
+            <!-- 버튼들 배치: 비밀번호 변경과 돌아가기 버튼을 가로로 배치 -->
+            <div style="display: flex; justify-content: space-between; gap: 4%; margin-top: 10px;">
+                <!-- 비밀번호 변경 버튼 -->
+                <button onclick="togglePasswordChange()" class="edit-button" style="width: 35%;">비밀번호 변경</button>
+
+                <!-- 회원 탈퇴 -->
+                <button onclick="toggleDeleteAccount()" class="edit-button"
+                        style="width: 30%; text-align: center; text-decoration: none;">회원탈퇴
+                </button>
+
+                <!-- 돌아가기 버튼 -->
+                <a href="{% url 'userinfo_page' %}" class="edit-button"
+                   style="width: 25%; text-align: center; text-decoration: none;">돌아가기</a>
+            </div>
+
+            <form id="password-change-form" method="post" action="{% url 'userinfo_edit' %}" style="display: none;">
+                {% csrf_token %}
+                <label for="current_password">현재 비밀번호:</label>
+                <input type="password" id="current_password" name="current_password" required>
+                <button type="button" class="edit-button" onclick="verifyCurrentPassword()">확인</button>
+                <small id="current-password-error" class="error-message"></small>
+
+                <div id="new-password-fields" style="display: none;">
+                    <label for="new_password">새 비밀번호:</label>
+                    <input type="password" id="new_password" name="new_password" required
+                           oninput="validatePasswordMatch()">
+
+                    <label for="confirm_password">새 비밀번호 확인:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required
+                           oninput="validatePasswordMatch()">
+                    <small id="password-match-error" class="error-message"></small>
+
+                    <button type="submit" class="edit-button save-button">저장</button>
+                </div>
+            </form>
+
+            <form id="delete-account-form" method="post" action="{% url 'delete_account' %}" style="display: none;">
+                {% csrf_token %}
+                <label for="delete_password">비밀번호:</label>
+                <input type="password" id="delete_password" name="delete_password" required>
+                <button type="button" class="edit-button" onclick="confirmDelete()">확인</button>
+                <small id="delete-password-error" class="error-message"></small>
+            </form>
+        </div>
+    </div>
+</div>
+
+{#{% include 'footer.html' %}#}
+
+<script src="{% static 'userinfo_edit.js' %}"></script>
+<script>
+
+    // 회원탈퇴 토글
+    function toggleDeleteAccount() {
+        console.log("회원탈퇴 버튼 클릭됨"); // 디버깅용 로그
+        const deleteForm = document.getElementById('delete-account-form');
+        deleteForm.style.display = deleteForm.style.display === 'none' ? 'block' : 'none';
+    }
+
+
+    // 회원탈퇴 비밀번호 확인 및 삭제 요청
+    async function confirmDelete() {
+        const deletePassword = document.getElementById('delete_password').value;
+        const errorField = document.getElementById('delete-password-error');
+
+        if (deletePassword === '') {
+            errorField.textContent = '비밀번호를 입력하세요.';
+            return;
+        }
+
+        const response = await fetch('/userinfo_edit/delete_account/', {  // 확인
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({delete_password: deletePassword})
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            window.location.href = '/login_page/';  // 로그인 페이지로 리다이렉트
+        } else {
+            errorField.textContent = result.message;
+        }
+    }
+
+    // CSRF 토큰 가져오기
+    function getCSRFToken() {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'csrftoken') {
+                return value;
+            }
+        }
+        return '';
+    }
+</script>
+</body>
+</html>

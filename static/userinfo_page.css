@@ -1,0 +1,76 @@
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    min-height: 100vh;*/
+/*    margin: 0;*/
+/*    background-color: #ffffff;*/
+/*  }*/
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #ffffff;
+  font-family: 'Gowun Batang', serif;
+}
+
+  .info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: "Gowun Batang", serif;
+  }
+
+  .card {
+    width: 300px;
+    background-color: #fef2f2;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Gowun Batang", serif;
+  }
+
+  .card-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #f87171;
+    font-family: "Gowun Batang", serif;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    font-family: "Gowun Batang", serif;
+  }
+
+  .card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: "Gowun Batang", serif;
+  }
+
+  .info-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: white;
+    background-color: #dc2626;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: "Gowun Batang", serif;
+  }
+
+  .info-button:hover {
+    background-color: #b91c1c;
+    font-family: "Gowun Batang", serif;
+  }

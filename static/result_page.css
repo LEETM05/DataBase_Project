@@ -1,0 +1,153 @@
+/*body {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    min-height: 100vh;*/
+/*    margin: 0;*/
+/*    font-family: Arial, sans-serif;*/
+/*    background-color: #ffffff;*/
+/*}*/
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #ffffff;
+  font-family: "Gowun Batang", serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: "Gowun Batang", serif;
+}
+
+.card {
+    background-color: #ffe6e6;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Gowun Batang", serif;
+}
+
+.card-header {
+    background-color: #ffc1c1;
+    padding: 16px;
+    text-align: center;
+    font-family: "Gowun Batang", serif;
+}
+
+.card-title {
+    margin: 0;
+    color: #333;
+    font-size: 1.5em;
+    font-weight: bold;
+    font-family: "Gowun Batang", serif;
+}
+
+.card-content {
+    padding: 20px;
+    font-family: "Gowun Batang", serif;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Gowun Batang", serif;
+}
+
+.pill-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-family: "Gowun Batang", serif;
+}
+
+.scroll-area {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    font-family: "Gowun Batang", serif;
+}
+
+.pill-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 8px 0;
+    color: #333;
+    font-family: "Gowun Batang", serif;
+}
+
+.pill-info {
+    margin: 8px 0;
+    color: #555;
+    font-family: "Gowun Batang", serif;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-family: "Gowun Batang", serif;
+}
+
+.button {
+    background-color: #e63946;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+    margin: 10px;
+    font-size: 1em;
+    font-family: "Gowun Batang", serif;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* 버튼 위쪽에 간격 추가 */
+    font-family: "Gowun Batang", serif;
+}
+
+/* 버튼 스타일 */
+.save_button {
+    background-color: #e63946;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    max-width: 100%; /* 버튼 최대 너비 설정 */
+    margin: 10px auto; /* 수평 방향 여백 자동 */
+    font-size: 1em;
+    font-family: "Gowun Batang", serif;
+    box-sizing: border-box;
+}
+
+.save_button:hover {
+    background-color: #d5303f;
+    font-family: "Gowun Batang", serif;
+}
+
+.button:hover {
+    background-color: #d5303f;
+    font-family: "Gowun Batang", serif;
+}
+
+.button:disabled {
+    background-color: #f0a3a3;
+    cursor: not-allowed;
+    font-family: "Gowun Batang", serif;
+}

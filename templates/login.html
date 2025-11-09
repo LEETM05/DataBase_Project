@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+{% include 'head_login.html' %}
+
+<body>
+<div class="title">
+    <h1>알정</h1>
+    <h6>알약에 대한 정보를 얻다.</h6>
+</div>
+<div class="auth-container">
+    <hr>
+    <div class="tabs">
+        <div class="tab-button active" onclick="showTab('login')">로그인</div>
+        <div class="tab-button" onclick="showTab('register')">회원가입</div>
+    </div>
+
+    <div id="login" class="form-content active">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="login-id">아이디</label>
+                <input type="text" id="login-id" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="login-password">비밀번호</label>
+                <input type="password" id="login-password" name="password" required>
+            </div>
+            {% if error_message %}
+                <small class="error-message">{{ error_message }}</small>
+            {% endif %}
+            <button type="submit" id="login-submit" class="submit-button">로그인</button>
+        </form>
+    </div>
+
+    <div id="register" class="form-content">
+        <form action="{% url 'register' %}" method="post" onsubmit="handleRegister(event)">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="register-id">아이디</label>
+                <input type="text" id="register-id" name="username" required>
+                <button type="button" id="check-username-btn" onclick="checkUsername()">아이디 중복 확인</button>
+                <small id="username-message" class="error-message"></small>  <!-- 중복 확인 메시지 추가 -->
+            </div>
+
+            <div class="input-group">
+                <label for="register-password">비밀번호</label>
+                <input type="password" id="register-password" name="password" required disabled>
+                <small class="helper-text">영어, 숫자, 특수기호로 작성해주세요.</small>
+            </div>
+            <div class="input-group">
+                <label for="register-confirm-password">비밀번호 확인</label>
+                <input type="password" id="register-confirm-password" name="confirm_password" required disabled>
+                <small id="confirm-password-message" class="error-message"></small>
+            </div>
+            <div class="input-group">
+                <label for="register-name">이름</label>
+                <input type="text" id="register-name" name="name" required disabled>
+                {% if error_message %}
+                    <small class="error-message" style="color: red;">{{ error_message }}</small>
+                {% endif %}
+            </div>
+            <button type="submit" id="register-submit" class="submit-button" disabled>회원가입</button>
+        </form>
+    </div>
+    <hr>
+</div>
+<div class="title">
+    <h6>알정</h6>
+</div>
+
+<script src={% static 'login.js' %}></script>
+</body>
+</html>
